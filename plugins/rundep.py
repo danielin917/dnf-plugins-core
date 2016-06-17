@@ -18,12 +18,35 @@
 # License and may only be used or replicated with the express permission of
 # Red Hat, Inc.
 #
+import argparse
+import rpm
+import os
+import dnf
+def main():
+    #SPEC FILE NAME
+    spec_fn = 'ceph.spec.in'
+    try:                                                                      
+        spec = rpm.spec(spec_fn)                                              
+    except ValueError:                                                        
+        msg = 'a'#_("Failed to open: '%s', not a valid spec file.") % spec_fn     
+        raise dnf.exceptions.Error(msg)                                       
+    done = True                                                               
+    for dep in rpm.ds(spec.sourceHeader, 'requires'):                         
+        reldep_str = self._rpm_dep2reldep_str(dep)                            
+        done &= self._install(reldep_str)                                     
+                                                                              
+    if not done:                                                              
+        err = _("Not all dependencies satisfied")                             
+        raise dnf.exceptions.Error(err)                                       
+
+if __name__ =="__main__":
+    main()
+
 """
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from dnfpluginscore import _, logger
 
-import pdb
 import argparse
 import dnf
 import dnf.cli
@@ -32,13 +55,12 @@ import dnfpluginscore.lib
 import functools
 import os
 import rpm
-import IPython
+
 
 
 class sink_rpm_logging(object):
     def __init__(self):
         self.sink = None
-        pdb.set_trace()
 
     def __call__(self, func):
         @functools.wraps(func)
@@ -57,17 +79,16 @@ class sink_rpm_logging(object):
 
 @dnf.plugin.register_command
 class BuildDepCommand(dnf.cli.Command):
-    IPython.start_ipython(argv=[])
+
     aliases = ('builddep',)
     msg = "Install build dependencies for package or spec file"
     summary = _(msg)
     usage = _("[PACKAGE|PACKAGE.spec]")
 
     def __init__(self, cli):
-        super(BuildDepCommand, self).__init__(cli) 
-        pdb.set_trace()
+        super(BuildDepCommand, self).__init__(cli)
         self.rpm_ts = rpm.TransactionSet()
-        IPython.start_ipython(argv=[])
+
     @staticmethod
     def set_argparser(parser):
         def macro_def(arg):
@@ -207,3 +228,4 @@ class BuildDepCommand(dnf.cli.Command):
         if not done:
             err = _("Not all dependencies satisfied")
             raise dnf.exceptions.Error(err)
+"""
