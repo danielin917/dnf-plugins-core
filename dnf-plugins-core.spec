@@ -30,6 +30,7 @@ Provides:       dnf-command(debuginfo-install)
 Provides:       dnf-command(download)
 Provides:       dnf-command(repoquery)
 Provides:       dnf-command(reposync)
+Provides:       dnf-command(rundep)
 
 %description
 Core Plugins for DNF. This package enhances DNF with builddep, config-manager,
