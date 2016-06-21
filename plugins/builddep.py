@@ -18,11 +18,12 @@
 # License and may only be used or replicated with the express permission of
 # Red Hat, Inc.
 #
-
+"""
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from dnfpluginscore import _, logger
 
+import pdb
 import argparse
 import dnf
 import dnf.cli
@@ -31,12 +32,13 @@ import dnfpluginscore.lib
 import functools
 import os
 import rpm
-
+import IPython
 
 
 class sink_rpm_logging(object):
     def __init__(self):
         self.sink = None
+        pdb.set_trace()
 
     def __call__(self, func):
         @functools.wraps(func)
@@ -55,16 +57,17 @@ class sink_rpm_logging(object):
 
 @dnf.plugin.register_command
 class BuildDepCommand(dnf.cli.Command):
-
+    IPython.start_ipython(argv=[])
     aliases = ('builddep',)
     msg = "Install build dependencies for package or spec file"
     summary = _(msg)
     usage = _("[PACKAGE|PACKAGE.spec]")
 
     def __init__(self, cli):
-        super(BuildDepCommand, self).__init__(cli)
+        super(BuildDepCommand, self).__init__(cli) 
+        pdb.set_trace()
         self.rpm_ts = rpm.TransactionSet()
-
+        IPython.start_ipython(argv=[])
     @staticmethod
     def set_argparser(parser):
         def macro_def(arg):
