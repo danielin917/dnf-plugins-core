@@ -19,12 +19,16 @@
 from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
-
+from dnf.i18n import _
 import argparse
 import dnf.exceptions
 import logging
 
-_, P_ = dnf.i18n.translation('dnf-plugins-core')
+
+
+
+
+
 logger = logging.getLogger('dnf.plugin')
 
 
